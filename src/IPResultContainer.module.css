@@ -1,0 +1,19 @@
+.IPResultContainer{
+    background-color: white;
+    width: 1300px;
+    height: 120px;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    padding: 36px 16px;
+    position: relative;
+    z-index: 1;
+    top: 50%;
+}
+
+.positioningContainer{
+    height: 120px;
+}

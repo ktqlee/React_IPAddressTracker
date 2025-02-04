@@ -1,0 +1,25 @@
+.Container{
+    width: 700px;
+    height: 60px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+input{
+    width: 92%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    font-size: 20px;
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 12px 0 0 12px;
+}
+.SearchButton{
+    width: 60px;
+    height: 100%;
+    border: 0;
+    border-radius: 0 12px 12px 0;
+    background-color: black;
+}
