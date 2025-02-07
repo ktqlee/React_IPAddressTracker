@@ -20,8 +20,10 @@ function App() {
 
     return (
         <main>
-        <SearchContainer ipDetail={ipDetail} />
-        <Map ipDetail={ipDetail} />
+            <SearchContainer 
+                ipDetail={ipDetail} getIpDetail={getIpDetail} setIpDetail={setIpDetail} 
+            />
+            <Map ipDetail={ipDetail} />
         </main>
     );
 }
@@ -57,6 +59,7 @@ function getIpDetail(ipAddress, setIpDetail){
                 setIpDetail({
                     ipAddress: ipAddress,
                     location: `${data.city}, ${data.regionName}, ${data.country}`,
+                    //TODO Converting timezone
                     timezone: data.timezone,
                     isp: data.isp,
                     latitude: data.lat,

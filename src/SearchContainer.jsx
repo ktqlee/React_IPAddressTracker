@@ -5,12 +5,12 @@ import IPResultContainer from "./IPResultContainer";
 
 import { useRef, useEffect } from "react";
 
-function SearchContainer({ipDetail}){
+function SearchContainer({ipDetail, getIpDetail, setIpDetail}){
     
     return(
         <div className={styles.SearchContainer}>
             <h1>IP Address Tracker</h1>
-            <IPSearchBar />
+            <IPSearchBar getIpDetail={getIpDetail} setIpDetail={setIpDetail} />
             <IPResultContainer ipDetail={ipDetail} />
         </div>
     );

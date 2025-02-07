@@ -1,20 +1,8 @@
 import React from "react";
 import styles from "./IPResultContainer.module.css";
 import IPResultSubContainer from "./component/IPResultSubContainer";
-import { useState, useEffect } from "react";
 
 function IPResultContainer({ipDetail}){
-    // const [result, setResult] = useState({
-    //     ipAddress: "Fetching...",
-    //     location: "Fetching...",
-    //     timezone: "Fetching...",
-    //     isp: "Fetching..."
-    // });
-
-    // useEffect(() => {
-    //     getResult(userIPAdress, setResult);
-    // }, [userIPAdress]);
-
     return(
         <div className={styles.positioningContainer}>
             <div className={styles.IPResultContainer}>
