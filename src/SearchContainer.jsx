@@ -3,14 +3,11 @@ import styles from "./SearchContainer.module.css";
 import IPSearchBar from "./component/IPSearchBar";
 import IPResultContainer from "./IPResultContainer";
 
-import { useRef, useEffect } from "react";
-
-function SearchContainer({ipDetail, getIpDetail, setIpDetail}){
-    
+function SearchContainer({ipDetail, setSearchRequest}){
     return(
         <div className={styles.SearchContainer}>
             <h1>IP Address Tracker</h1>
-            <IPSearchBar getIpDetail={getIpDetail} setIpDetail={setIpDetail} />
+            <IPSearchBar setSearchRequest={setSearchRequest} />
             <IPResultContainer ipDetail={ipDetail} />
         </div>
     );

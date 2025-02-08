@@ -13,15 +13,22 @@ function App() {
             longitude: null
         });
 
+    const [searchRequest, setSearchRequest] = useState();
+
     // Get users' current location when the page is loaded
     useEffect(() => {
         getIPAddress(setIpDetail);
     }, []);
 
+    useEffect(() => {
+        console.log(`searchRequest: ${searchRequest}`);
+        getIpDetail(searchRequest);
+    }, [searchRequest]);
+
     return (
         <main>
             <SearchContainer 
-                ipDetail={ipDetail} getIpDetail={getIpDetail} setIpDetail={setIpDetail} 
+                ipDetail={ipDetail} setSearchRequest={setSearchRequest}
             />
             <Map ipDetail={ipDetail} />
         </main>
@@ -67,7 +74,7 @@ function getIpDetail(ipAddress, setIpDetail){
                 });
             })
             .catch((error) => {
-                console.log(`Get IP info error:\n${error}`);
+                console.log(`Get IP detail error:\n${error}`);
             })
     }
     
