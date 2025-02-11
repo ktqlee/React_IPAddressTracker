@@ -14,6 +14,7 @@ function App() {
         });
 
     const [searchRequest, setSearchRequest] = useState();
+    const [errorState, setErrorState] = useState(false);
 
     // Get users' current location when the page is loaded
     useEffect(() => {
@@ -21,14 +22,13 @@ function App() {
     }, []);
 
     useEffect(() => {
-        console.log(`searchRequest: ${searchRequest}`);
-        getIpDetail(searchRequest);
+        getIpDetail(searchRequest, setIpDetail, setErrorState);
     }, [searchRequest]);
 
     return (
         <main>
             <SearchContainer 
-                ipDetail={ipDetail} setSearchRequest={setSearchRequest}
+                ipDetail={ipDetail} setSearchRequest={setSearchRequest} errorState={errorState}
             />
             <Map ipDetail={ipDetail} />
         </main>
@@ -38,8 +38,7 @@ function App() {
 function getIPAddress(setIpDetail){
     // ipify api is used for getting users' IP address
     const getIPAddressAPI = "https://api.ipify.org?format=json";
-    
-    console.log("Getting IP Address...");
+
     fetch(getIPAddressAPI)
         .then((response) => {
             return response.json();
@@ -52,33 +51,54 @@ function getIPAddress(setIpDetail){
         })
 }
 
-function getIpDetail(ipAddress, setIpDetail){
+async function getIpDetail(ipAddress, setIpDetail, setErrorState = ()=>{}){
     // ip-api IP Geolocation API is used
     const APIpath = "http://ip-api.com/json/" + ipAddress;
     
-    if(ipAddress !== null && ipAddress !== undefined){
-        console.log("Getting IP Detail With The Address...")
-        fetch(APIpath)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
+    try{
+        if(ipAddress !== null && ipAddress !== undefined){
+            const response = await fetch(APIpath);
+            const data = await response.json();
+                
+            if(data.status === "success"){
+                const timezone = await getTimeZone(ipAddress);
                 setIpDetail({
                     ipAddress: ipAddress,
                     location: `${data.city}, ${data.regionName}, ${data.country}`,
-                    //TODO Converting timezone
-                    timezone: data.timezone,
+                    timezone: timezone,
                     isp: data.isp,
                     latitude: data.lat,
                     longitude: data.lon
                 });
-            })
-            .catch((error) => {
-                console.log(`Get IP detail error:\n${error}`);
-            })
+                setErrorState(false);
+            }
+            else{
+                // Invalid IP Address
+                console.log("Invalid IP Address");
+                setErrorState(true);
+            }   
+        }
+    } 
+    catch(error){
+        console.log(`Get IP detail error:\nIP address: ${ipAddress}\n${error}`);
     }
     
 }
+
+// Another API is used for getting the time zone becuase ip-api's "offset" data is unavailbale (undefined)
+async function getTimeZone(ipAddress){
+    const APIpath = `https://freeipapi.com/api/json/${ipAddress}`;
+    
+    try{
+        const response = await fetch(APIpath);
+        const data = await response.json();
+        return 'UTC ' + data.timeZone;
+    } 
+    catch(error) {
+        console.log("Get timeZone error\n", error);
+        return null;
+    }
+}   
 
 export default App;
 

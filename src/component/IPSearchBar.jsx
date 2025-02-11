@@ -2,24 +2,25 @@ import React from "react";
 import styles from "./IPSearchBar.module.css"
 import { useState } from "react";
 
-function IPSearchBar({setSearchRequest}){
+function IPSearchBar({setSearchRequest, errorState}){
 
     const [query, setQuery] = useState();
+    
     const handleInput = (event) => {
-        console.log("event value: ", event.target.value);
         setQuery(event.target.value);
-        
     }
-    console.log("query", query);
-    const handleSearch = () => {
-        console.log("Handle IP search: ", query);
+
+    const handleSearch = (event) => {
+        event.preventDefault()
         setSearchRequest(query);
     }
     
     return(
         <div className={styles.Container}>
             <form onSubmit={handleSearch}>
-                <input type="text" placeholder="Search for any IP address or domain" onChange={handleInput}></input>
+                <input type="text" placeholder="Search for any IP address or domain" 
+                    onChange={handleInput} className={`${errorState? styles.InputError: styles.InputSuccess}`}>
+                </input>
                 <button type="submit" className={styles.SearchButton}>
                     <img src="../images/icon-arrow.svg"></img>
                 </button>

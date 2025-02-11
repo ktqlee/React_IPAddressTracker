@@ -7,8 +7,6 @@ import styles from "./Map.module.css";
 // leaflet map center : [latitude, longitude]
 
 function Map({ipDetail}){
-    // center={[51.505, -0.09]}
-
     return(
         <div className={styles.MapOuterContainer}>
             <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true} className={styles.Map}>
@@ -40,7 +38,7 @@ function MapController({ipDetail}){
             });
             // ipDetail's data is used instead of markerPosition
             // as markerPosition is not yet updated when flyTo() is called
-            map.flyTo([ipDetail.latitude, ipDetail.longitude]);
+            map.flyTo([ipDetail.latitude, ipDetail.longitude], 13);
         }
     }, [ipDetail]);
     

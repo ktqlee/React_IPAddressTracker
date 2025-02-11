@@ -30,3 +30,13 @@ input{
     border-radius: 0 12px 12px 0;
     background-color: black;
 }
+
+.InputError{
+    border: 1px solid rgb(255, 36, 36);
+    background-color: hsl(0, 85%, 90%);
+}
+
+.InputSuccess{
+    border: 0;
+    background-color: white;
+}
