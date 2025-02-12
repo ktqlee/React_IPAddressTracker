@@ -22,7 +22,7 @@ function IPSearchBar({setSearchRequest, errorState}){
                     onChange={handleInput} className={`${errorState? styles.InputError: styles.InputSuccess}`}>
                 </input>
                 <button type="submit" className={styles.SearchButton}>
-                    <img src="../images/icon-arrow.svg"></img>
+                    <img src="React_IPAddressTracker/images/icon-arrow.svg"></img>
                 </button>
             </form>
         </div>
