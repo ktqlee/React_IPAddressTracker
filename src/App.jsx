@@ -23,6 +23,7 @@ function App() {
 
     useEffect(() => {
         // getIpDetail(searchRequest, setIpDetail, setErrorState);
+        //! V2
         getIpDetail_V2(searchRequest, setIpDetail, setErrorState);
     }, [searchRequest]);
 
@@ -46,40 +47,17 @@ function getIPAddress(setIpDetail){
         })
         .then((data) => {
             // getIpDetail(data.ip, setIpDetail);
-            getIpDetail_V2(data.ip, setIpDetail)
+            //! V2
+            getIpDetail_V2(data.ip, setIpDetail);
         })
         .catch((error) => {
             console.log("Getting IP Address Error\n", error);
         })
 }
 
-async function getIpDetail_V2(ipAddress, setIpDetail, setErrorState = ()=>{}){
-    const APIpath = `https://freeipapi.com/api/json/${ipAddress}`;
-    
-    try{
-        const response = await fetch(APIpath);
-        const data = await response.json();
-        setIpDetail({
-            ipAddress: ipAddress,
-            location: `${data.cityName}, ${data.regionName}, ${data.countryName}`,
-            timezone: data.timeZone,
-            // ips data is not available
-            isp: data.zipCode,
-            latitude: data.latitude,
-            longitude: data.longitude
-        });
-        setErrorState(false);
-    } 
-    catch(error) {
-        console.log("Get timeZone error\n", error);
-        setErrorState(true);
-    }
-}  
-
-// This function is abandoned as https request is not available for ip-api
 async function getIpDetail(ipAddress, setIpDetail, setErrorState = ()=>{}){
     // ip-api IP Geolocation API is used
-    const APIpath = "http://ip-api.com/json/" + ipAddress;
+    const APIpath = `http://ip-api.com/json/${ipAddress}`;
     
     try{
         if(ipAddress !== null && ipAddress !== undefined){
@@ -125,6 +103,29 @@ async function getTimeZone(ipAddress){
         return null;
     }
 }   
+
+async function getIpDetail_V2(ipAddress, setIpDetail, setErrorState = ()=>{}){
+    const APIpath = `https://freeipapi.com/api/json/${ipAddress}`;
+    
+    try{
+        const response = await fetch(APIpath);
+        const data = await response.json();
+        setIpDetail({
+            ipAddress: ipAddress,
+            location: `${data.cityName}, ${data.regionName}, ${data.countryName}`,
+            timezone: `UTC ${data.timeZone}`,
+            // ips data is not available
+            isp: "ISP data is unavailable with the API",
+            latitude: data.latitude,
+            longitude: data.longitude
+        });
+        setErrorState(false);
+    } 
+    catch(error) {
+        console.log("Get timeZone error\n", error);
+        setErrorState(true);
+    }
+}  
 
 export default App;
 
