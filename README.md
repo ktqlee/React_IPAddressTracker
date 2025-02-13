@@ -6,7 +6,7 @@ This is a coding challenge from the [Frontend Mentor](https://www.frontendmentor
 
 ## Demo Video 
 
-
+https://github.com/user-attachments/assets/b5e39fa9-ee4b-4ee6-83f2-8eaebf5aaf94
 
 ## Use of API
 
